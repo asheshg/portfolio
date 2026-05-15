@@ -5,212 +5,34 @@
     {
       label: 'Introduction',
       stories: [
-        {
-          visual: 'intro-1',
-          stickers: [
-            { text: 'Hi! 👋\nI am Ashesh.', x: 41, y: 136, w: 140, size: 24, rotate: 7 },
-            { text: 'This is my website. It’s like IG stories.', x: 54, y: 460, w: 264, size: 16, rotate: 8 },
-            { text: 'Tap to navigate, or swipe to skip sections.', x: 56, y: 651, w: 294, size: 16, rotate: 8 }
-          ]
-        },
-        {
-          visual: 'intro-2',
-          stickers: [
-            {
-              text: 'I am a UI/UX designer or a digital product designer.',
-              x: 34,
-              y: 96,
-              w: 279,
-              size: 24,
-              rotate: 1
-            },
-            {
-              text: 'It mostly involves designing and redesigning websites and apps. Sometimes with AI.',
-              x: 67,
-              y: 567,
-              w: 236,
-              size: 16,
-              rotate: 13
-            }
-          ]
-        },
-        {
-          visual: 'intro-3',
-          stickers: [
-            { text: 'I currently work at pwc_india.', x: 25, y: 328, w: 317, size: 24, rotate: 5 },
-            { text: 'Before that, I worked at', x: 33, y: 524, w: 169, size: 16, rotate: 9 },
-            { text: '@yellowslice', x: 44, y: 582, w: 93, size: 16, rotate: 9 },
-            { text: '@wayfair', x: 155, y: 569, w: 68, size: 16, rotate: 9 },
-            { text: '@ransmeier', x: 243, y: 551, w: 87, size: 16, rotate: 9 },
-            { text: '@risd1877', x: 52, y: 640, w: 78, size: 16, rotate: 9 }
-          ]
-        }
+        { src: '/stories/intro-1.png', width: 375, height: 758, alt: 'Introduction story 1' },
+        { src: '/stories/intro-2.png', width: 375, height: 758, alt: 'Introduction story 2' },
+        { src: '/stories/intro-3.png', width: 375, height: 758, alt: 'Introduction story 3' }
       ]
     },
     {
       label: 'Work - v0',
       stories: [
-        {
-          visual: 'work-1',
-          collage: true,
-          stickers: [
-            {
-              text: 'I recently redesigned 4 major modules for a CRM of a leading Indian bank.',
-              x: 43,
-              y: 116,
-              w: 279,
-              size: 24,
-              rotate: 1
-            },
-            { text: 'Covered by NDA 🤐', x: 120, y: 452, w: 139, size: 16, rotate: 5 }
-          ]
-        },
-        {
-          visual: 'work-2',
-          stickers: [
-            {
-              text: 'At yellowslice, I redesigned the mutualfundssahihai website.',
-              x: 88,
-              y: 64,
-              w: 226,
-              size: 16,
-              rotate: 7
-            },
-            {
-              text: 'And an ERP for construction management teams.',
-              x: 70,
-              y: 309,
-              w: 203,
-              size: 16,
-              rotate: 5
-            },
-            {
-              text: 'I also designed a govt visitor management app.',
-              x: 74,
-              y: 526,
-              w: 236,
-              size: 16,
-              rotate: 15
-            }
-          ]
-        },
-        {
-          visual: 'work-3',
-          stickers: [
-            {
-              text: "And allmodern's store locations page for their first ever physical retail store at wayfair.",
-              x: 22,
-              y: 102,
-              w: 321,
-              size: 16,
-              rotate: 9
-            },
-            {
-              text: 'Along with streamlining an internal tool to just one click.',
-              x: 70,
-              y: 488,
-              w: 236,
-              size: 16,
-              rotate: 10
-            }
-          ]
-        },
-        {
-          visual: 'work-4',
-          stickers: [
-            {
-              text: 'Also designed (& pitched) a pitch deck to help an NGO win a grant.',
-              x: 47,
-              y: 238,
-              w: 279,
-              size: 16,
-              rotate: 9
-            },
-            { text: 'You can watch it here', x: 118, y: 308, w: 152, size: 16, rotate: 9 },
-            {
-              text: 'Which also got featured in Rhode Island Medical Journal',
-              x: 66,
-              y: 606,
-              w: 220,
-              size: 16,
-              rotate: 8
-            }
-          ]
-        }
+        { src: '/stories/work-v0-1.png', width: 375, height: 758, alt: 'Work v0 story 1' },
+        { src: '/stories/work-v0-2.png', width: 375, height: 758, alt: 'Work v0 story 2' },
+        { src: '/stories/work-v0-3.png', width: 375, height: 758, alt: 'Work v0 story 3' },
+        { src: '/stories/work-v0-4.png', width: 375, height: 758, alt: 'Work v0 story 4' }
       ]
     },
     {
       label: 'Figma',
-      stories: [
-        {
-          visual: 'figma-1',
-          collage: true,
-          stickers: [
-            { text: 'I made this site on Figma.', x: 50, y: 143, w: 276, size: 24, rotate: 0 },
-            {
-              text: 'Implemented it with some more tools (and AI).',
-              x: 69,
-              y: 198,
-              w: 236,
-              size: 16,
-              rotate: 0
-            },
-            { text: 'Check it out here', x: 98, y: 621, w: 179, size: 24, rotate: 4 }
-          ]
-        }
-      ]
+      stories: [{ src: '/stories/figma-1.png', width: 480, height: 758, alt: 'Figma story' }]
     },
     {
       label: 'Me',
       stories: [
-        {
-          visual: 'me-1',
-          stickers: [
-            {
-              text: 'When I am not working, I am exploring museums or exhibitions.',
-              x: 65,
-              y: 102,
-              w: 245,
-              size: 16,
-              rotate: 3
-            }
-          ]
-        },
-        {
-          visual: 'me-2',
-          stickers: [
-            { text: 'Or making stuff with glass.', x: 108, y: 289, w: 190, size: 16, rotate: 4 },
-            {
-              text: 'Or just making or repairing something.',
-              x: 80,
-              y: 583,
-              w: 273,
-              size: 16,
-              rotate: 6
-            }
-          ]
-        }
+        { src: '/stories/me-1.png', width: 375, height: 758, alt: 'Me story 1' },
+        { src: '/stories/me-2.png', width: 375, height: 758, alt: 'Me story 2' }
       ]
     },
     {
       label: 'Contact',
-      stories: [
-        {
-          visual: 'contact-1',
-          stickers: [
-            {
-              text: 'If you have reached here, don’t forget to say hello!',
-              x: 67,
-              y: 166,
-              w: 234,
-              size: 24,
-              rotate: 0
-            },
-            { text: 'LinkedIn', x: 156, y: 547, w: 62, size: 16, rotate: 0 },
-            { text: '@asheshgohil', x: 138, y: 593, w: 99, size: 16, rotate: 0 }
-          ]
-        }
-      ]
+      stories: [{ src: '/stories/contact-1.png', width: 375, height: 758, alt: 'Contact story' }]
     }
   ];
 
@@ -223,6 +45,7 @@
   $: chapter = chapters[chapterIndex];
   $: story = chapter.stories[storyIndex];
   $: storyKey = `${chapterIndex}-${storyIndex}`;
+  $: aspect = `${story.width} / ${story.height}`;
 
   function clampStory(nextChapter, nextStory) {
     const safeChapter = Math.max(0, Math.min(chapters.length - 1, nextChapter));
@@ -324,51 +147,9 @@
     on:touchstart={handleTouchStart}
     on:touchend={handleTouchEnd}
   >
-    <div class="story-phone">
+    <div class="story-phone" style:aspect-ratio={aspect}>
       {#key storyKey}
-        <article class={`story-frame ${story.visual}`}>
-          <div class="photo-scene" aria-hidden="true">
-            <span class="person-head"></span>
-            <span class="person-body"></span>
-            <span class="scene-line scene-line-a"></span>
-            <span class="scene-line scene-line-b"></span>
-            {#if story.collage}
-              <span class="mock mock-a"></span>
-              <span class="mock mock-b"></span>
-              <span class="mock mock-c"></span>
-              <span class="thumb thumb-a"></span>
-              <span class="thumb thumb-b"></span>
-              <span class="thumb thumb-c"></span>
-            {/if}
-          </div>
-
-          <div class="top-scrim"></div>
-
-          <div class="progress-row" aria-hidden="true">
-            {#each chapter.stories as item, index}
-              <span class:complete={index < storyIndex} class:current={index === storyIndex}></span>
-            {/each}
-          </div>
-
-          <header class="story-header">
-            <span class="avatar" aria-hidden="true"></span>
-            <span class="username">asheshgohil</span>
-            <span class="verified" aria-hidden="true">✓</span>
-            <span class="time">11h</span>
-            <span class="options" aria-hidden="true">•••</span>
-            <span class="close" aria-hidden="true">×</span>
-          </header>
-
-          {#each story.stickers as sticker}
-            <p
-              class="sticker"
-              class:large={sticker.size >= 24}
-              style={`left:${sticker.x / 3.75}%;top:${sticker.y / 7.58}%;width:${sticker.w / 3.75}%;--r:${sticker.rotate}deg;`}
-            >
-              {sticker.text}
-            </p>
-          {/each}
-        </article>
+        <img class="story-image" src={story.src} width={story.width} height={story.height} alt={story.alt} />
       {/key}
 
       <button class="tap-zone tap-left" type="button" aria-label="Previous story" on:click={previousStory}></button>

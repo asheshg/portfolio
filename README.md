@@ -16,6 +16,15 @@ npm install
 npm run dev
 ```
 
+## Penpot Assets
+
+The story visuals are exported from Penpot into `static/stories/` as PNG files.
+After changing the Penpot wireframes, reconnect the Penpot MCP server and run:
+
+```sh
+node scripts/export-penpot-stories.mjs
+```
+
 ## Deployment
 
 This project uses SvelteKit with `@sveltejs/adapter-vercel`.
