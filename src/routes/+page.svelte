@@ -1,6 +1,8 @@
 <script>
   import { onMount } from 'svelte';
 
+  const storyDuration = 6000;
+
   const chapters = [
     {
       label: 'Introduction',
@@ -41,11 +43,17 @@
   let direction = 1;
   let touchStartX = 0;
   let touchStartY = 0;
+  let progressKey = 0;
+  let transitionKey = 0;
+  let transitionKind = 'story';
+  let autoplayTimer;
+  let mounted = false;
 
   $: chapter = chapters[chapterIndex];
   $: story = chapter.stories[storyIndex];
-  $: storyKey = `${chapterIndex}-${storyIndex}`;
+  $: storyKey = `${chapterIndex}-${storyIndex}-${transitionKey}`;
   $: aspect = `${story.width} / ${story.height}`;
+  $: progressStyle = `--story-duration:${storyDuration}ms;`;
 
   function clampStory(nextChapter, nextStory) {
     const safeChapter = Math.max(0, Math.min(chapters.length - 1, nextChapter));
@@ -54,9 +62,18 @@
   }
 
   function setStory(nextChapter, nextStory, nextDirection = 1) {
-    [chapterIndex, storyIndex] = clampStory(nextChapter, nextStory);
+    const previousChapter = chapterIndex;
+    const [safeChapter, safeStory] = clampStory(nextChapter, nextStory);
+    const changedSection = previousChapter !== safeChapter;
+
+    chapterIndex = safeChapter;
+    storyIndex = safeStory;
     direction = nextDirection;
+    transitionKind = changedSection ? 'section' : 'story';
+    transitionKey += 1;
+    progressKey += 1;
     window.history.replaceState(null, '', `#/${chapterIndex}/${storyIndex}`);
+    if (mounted) scheduleAutoplay();
   }
 
   function nextStory() {
@@ -86,6 +103,30 @@
     setStory(index, 0, index >= chapterIndex ? 1 : -1);
   }
 
+  function scheduleAutoplay() {
+    clearTimeout(autoplayTimer);
+    autoplayTimer = setTimeout(() => {
+      nextStory();
+    }, storyDuration);
+  }
+
+  function syncFromHash() {
+    const [, rawChapter, rawStory] = window.location.hash.match(/^#\/(\d+)\/(\d+)$/) || [];
+    if (rawChapter !== undefined && rawStory !== undefined) {
+      const previousChapter = chapterIndex;
+      const [safeChapter, safeStory] = clampStory(Number(rawChapter), Number(rawStory));
+      chapterIndex = safeChapter;
+      storyIndex = safeStory;
+      direction = safeChapter >= previousChapter ? 1 : -1;
+      transitionKind = previousChapter !== safeChapter ? 'section' : 'story';
+      transitionKey += 1;
+      progressKey += 1;
+    } else {
+      window.history.replaceState(null, '', '#/0/0');
+    }
+    scheduleAutoplay();
+  }
+
   function handleKeydown(event) {
     if (event.key === 'ArrowRight' || event.key === ' ') nextStory();
     if (event.key === 'ArrowLeft') previousStory();
@@ -111,15 +152,17 @@
   }
 
   onMount(() => {
-    const [, rawChapter, rawStory] = window.location.hash.match(/^#\/(\d+)\/(\d+)$/) || [];
-    if (rawChapter !== undefined && rawStory !== undefined) {
-      [chapterIndex, storyIndex] = clampStory(Number(rawChapter), Number(rawStory));
-    } else {
-      window.history.replaceState(null, '', '#/0/0');
-    }
+    mounted = true;
+    syncFromHash();
 
+    window.addEventListener('hashchange', syncFromHash);
     window.addEventListener('keydown', handleKeydown);
-    return () => window.removeEventListener('keydown', handleKeydown);
+    return () => {
+      mounted = false;
+      clearTimeout(autoplayTimer);
+      window.removeEventListener('hashchange', syncFromHash);
+      window.removeEventListener('keydown', handleKeydown);
+    };
   });
 </script>
 
@@ -149,8 +192,25 @@
   >
     <div class="story-phone" style:aspect-ratio={aspect}>
       {#key storyKey}
-        <img class="story-image" src={story.src} width={story.width} height={story.height} alt={story.alt} />
+        <img
+          class="story-image"
+          class:section-image={transitionKind === 'section'}
+          src={story.src}
+          width={story.width}
+          height={story.height}
+          alt={story.alt}
+        />
       {/key}
+
+      <div class="progress-mask" aria-hidden="true">
+        {#key progressKey}
+          <div class="progress-row" style={progressStyle}>
+            {#each chapter.stories as item, index}
+              <span class:complete={index < storyIndex} class:current={index === storyIndex}></span>
+            {/each}
+          </div>
+        {/key}
+      </div>
 
       <button class="tap-zone tap-left" type="button" aria-label="Previous story" on:click={previousStory}></button>
       <button class="tap-zone tap-right" type="button" aria-label="Next story" on:click={nextStory}></button>

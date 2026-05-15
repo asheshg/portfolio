@@ -64,6 +64,7 @@ button {
   display: grid;
   place-items: center;
   padding: 0.75rem;
+  perspective: 1200px;
 }
 
 .story-phone {
@@ -74,7 +75,7 @@ button {
   overflow: hidden;
   border-radius: 8px;
   background: #000000;
-  animation: enter 340ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-style: preserve-3d;
 }
 
 .story-phone:has(.story-image[width="480"]) {
@@ -88,6 +89,52 @@ button {
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
+  animation: story-in 240ms ease-out both;
+}
+
+.story-image.section-image {
+  animation: cube-in 620ms cubic-bezier(0.2, 0.74, 0.18, 1) both;
+  transform-origin: calc(50% - (var(--direction) * 50%)) 50%;
+}
+
+.progress-mask {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 7;
+  height: 12px;
+  padding: 4px 8px 0;
+  background: #000000;
+}
+
+.progress-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+}
+
+.progress-row span {
+  height: 2px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.progress-row span::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: #ffffff;
+}
+
+.progress-row span.complete::after {
+  width: 100%;
+}
+
+.progress-row span.current::after {
+  animation: progress-fill var(--story-duration) linear forwards;
 }
 
 .tap-zone {
@@ -109,10 +156,35 @@ button {
   right: 0;
 }
 
-@keyframes enter {
+@keyframes story-in {
   from {
     opacity: 0;
-    transform: translateX(calc(var(--direction) * 22px));
+    transform: translateX(calc(var(--direction) * 12px));
+  }
+}
+
+@keyframes cube-in {
+  from {
+    opacity: 0.2;
+    transform: translateX(calc(var(--direction) * 56%)) rotateY(calc(var(--direction) * -78deg)) scale(0.96);
+    filter: brightness(0.65);
+  }
+
+  58% {
+    opacity: 1;
+    filter: brightness(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) rotateY(0) scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes progress-fill {
+  to {
+    width: 100%;
   }
 }
 
