@@ -75,6 +75,8 @@ button {
   overflow: hidden;
   border-radius: 8px;
   background: #000000;
+  cursor: pointer;
+  touch-action: none;
   transform-style: preserve-3d;
 }
 
@@ -142,10 +144,10 @@ button {
   top: 0;
   bottom: 0;
   z-index: 8;
-  width: 42%;
+  width: 50%;
   border: 0;
   background: transparent;
-  cursor: pointer;
+  pointer-events: none;
 }
 
 .tap-left {

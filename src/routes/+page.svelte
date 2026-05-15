@@ -41,8 +41,8 @@
   let chapterIndex = 0;
   let storyIndex = 0;
   let direction = 1;
-  let touchStartX = 0;
-  let touchStartY = 0;
+  let pointerStartX = 0;
+  let pointerStartY = 0;
   let progressKey = 0;
   let transitionKey = 0;
   let transitionKind = 'story';
@@ -79,23 +79,24 @@
   function nextStory() {
     if (storyIndex < chapter.stories.length - 1) {
       setStory(chapterIndex, storyIndex + 1, 1);
-      return;
-    }
-
-    if (chapterIndex < chapters.length - 1) {
-      setStory(chapterIndex + 1, 0, 1);
     }
   }
 
   function previousStory() {
     if (storyIndex > 0) {
       setStory(chapterIndex, storyIndex - 1, -1);
-      return;
     }
+  }
 
+  function nextSection() {
+    if (chapterIndex < chapters.length - 1) {
+      setStory(chapterIndex + 1, 0, 1);
+    }
+  }
+
+  function previousSection() {
     if (chapterIndex > 0) {
-      const previousChapter = chapters[chapterIndex - 1];
-      setStory(chapterIndex - 1, previousChapter.stories.length - 1, -1);
+      setStory(chapterIndex - 1, 0, -1);
     }
   }
 
@@ -130,25 +131,29 @@
   function handleKeydown(event) {
     if (event.key === 'ArrowRight' || event.key === ' ') nextStory();
     if (event.key === 'ArrowLeft') previousStory();
-    if (event.key === 'ArrowUp') goToChapter(Math.max(0, chapterIndex - 1));
-    if (event.key === 'ArrowDown') goToChapter(Math.min(chapters.length - 1, chapterIndex + 1));
+    if (event.key === 'ArrowUp') previousSection();
+    if (event.key === 'ArrowDown') nextSection();
   }
 
-  function handleTouchStart(event) {
-    const touch = event.touches[0];
-    touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
+  function handlePointerDown(event) {
+    pointerStartX = event.clientX;
+    pointerStartY = event.clientY;
   }
 
-  function handleTouchEnd(event) {
-    const touch = event.changedTouches[0];
-    const deltaX = touch.clientX - touchStartX;
-    const deltaY = touch.clientY - touchStartY;
+  function handlePointerUp(event) {
+    const deltaX = event.clientX - pointerStartX;
+    const deltaY = event.clientY - pointerStartY;
 
     if (Math.abs(deltaX) > 56 && Math.abs(deltaX) > Math.abs(deltaY)) {
-      if (deltaX < 0) goToChapter(Math.min(chapters.length - 1, chapterIndex + 1));
-      if (deltaX > 0) goToChapter(Math.max(0, chapterIndex - 1));
+      if (deltaX < 0) nextSection();
+      if (deltaX > 0) previousSection();
+      return;
     }
+
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const midpoint = bounds.left + bounds.width / 2;
+    if (event.clientX < midpoint) previousStory();
+    else nextStory();
   }
 
   onMount(() => {
@@ -187,10 +192,15 @@
   <section
     class="story-stage"
     aria-label={`${chapter.label} story ${storyIndex + 1}`}
-    on:touchstart={handleTouchStart}
-    on:touchend={handleTouchEnd}
   >
-    <div class="story-phone" style:aspect-ratio={aspect}>
+    <div
+      class="story-phone"
+      role="group"
+      aria-label="Story viewer"
+      style:aspect-ratio={aspect}
+      on:pointerdown={handlePointerDown}
+      on:pointerup={handlePointerUp}
+    >
       {#key storyKey}
         <img
           class="story-image"
@@ -212,8 +222,8 @@
         {/key}
       </div>
 
-      <button class="tap-zone tap-left" type="button" aria-label="Previous story" on:click={previousStory}></button>
-      <button class="tap-zone tap-right" type="button" aria-label="Next story" on:click={nextStory}></button>
+      <span class="tap-zone tap-left" aria-hidden="true"></span>
+      <span class="tap-zone tap-right" aria-hidden="true"></span>
     </div>
   </section>
 </main>
