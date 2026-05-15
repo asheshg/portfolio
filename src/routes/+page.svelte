@@ -4,128 +4,241 @@
   const chapters = [
     {
       label: 'Introduction',
-      slides: [
+      stories: [
         {
-          eyebrow: 'Introduction',
-          title: 'Ashesh Gohil',
-          body: 'A portfolio told like a sequence of small, deliberate moments.',
-          figure: '01 / opening frame',
-          mode: 'intro',
-          tags: ['Design', 'Motion', 'Code']
+          visual: 'intro-1',
+          stickers: [
+            { text: 'Hi! 👋\nI am Ashesh.', x: 41, y: 136, w: 140, size: 24, rotate: 7 },
+            { text: 'This is my website. It’s like IG stories.', x: 54, y: 460, w: 264, size: 16, rotate: 8 },
+            { text: 'Tap to navigate, or swipe to skip sections.', x: 56, y: 651, w: 294, size: 16, rotate: 8 }
+          ]
         },
         {
-          eyebrow: 'Introduction',
-          title: 'I design interfaces that move with intent.',
-          body: 'The site behaves like stories: tap right to continue, tap left to rewind, swipe to move between chapters.',
-          figure: '02 / interaction cue',
-          mode: 'gesture',
-          tags: ['Tap', 'Swipe', 'Keyboard']
+          visual: 'intro-2',
+          stickers: [
+            {
+              text: 'I am a UI/UX designer or a digital product designer.',
+              x: 34,
+              y: 96,
+              w: 279,
+              size: 24,
+              rotate: 1
+            },
+            {
+              text: 'It mostly involves designing and redesigning websites and apps. Sometimes with AI.',
+              x: 67,
+              y: 567,
+              w: 236,
+              size: 16,
+              rotate: 13
+            }
+          ]
+        },
+        {
+          visual: 'intro-3',
+          stickers: [
+            { text: 'I currently work at pwc_india.', x: 25, y: 328, w: 317, size: 24, rotate: 5 },
+            { text: 'Before that, I worked at', x: 33, y: 524, w: 169, size: 16, rotate: 9 },
+            { text: '@yellowslice', x: 44, y: 582, w: 93, size: 16, rotate: 9 },
+            { text: '@wayfair', x: 155, y: 569, w: 68, size: 16, rotate: 9 },
+            { text: '@ransmeier', x: 243, y: 551, w: 87, size: 16, rotate: 9 },
+            { text: '@risd1877', x: 52, y: 640, w: 78, size: 16, rotate: 9 }
+          ]
         }
       ]
     },
     {
       label: 'Work - v0',
-      slides: [
+      stories: [
         {
-          eyebrow: 'Work - v0',
-          title: 'Fast prototypes, shaped into usable systems.',
-          body: 'A space for experiments, launches, and product ideas that need taste and velocity at the same time.',
-          figure: '03 / product board',
-          mode: 'grid',
-          tags: ['Prototype', 'Launch', 'System']
+          visual: 'work-1',
+          collage: true,
+          stickers: [
+            {
+              text: 'I recently redesigned 4 major modules for a CRM of a leading Indian bank.',
+              x: 43,
+              y: 116,
+              w: 279,
+              size: 24,
+              rotate: 1
+            },
+            { text: 'Covered by NDA 🤐', x: 120, y: 452, w: 139, size: 16, rotate: 5 }
+          ]
         },
         {
-          eyebrow: 'Work - v0',
-          title: 'From loose prompt to working interface.',
-          body: 'Each motion decision is treated as part of the product language, not a decorative afterthought.',
-          figure: '04 / iteration path',
-          mode: 'timeline',
-          tags: ['v0', 'UI', 'Flow']
+          visual: 'work-2',
+          stickers: [
+            {
+              text: 'At yellowslice, I redesigned the mutualfundssahihai website.',
+              x: 88,
+              y: 64,
+              w: 226,
+              size: 16,
+              rotate: 7
+            },
+            {
+              text: 'And an ERP for construction management teams.',
+              x: 70,
+              y: 309,
+              w: 203,
+              size: 16,
+              rotate: 5
+            },
+            {
+              text: 'I also designed a govt visitor management app.',
+              x: 74,
+              y: 526,
+              w: 236,
+              size: 16,
+              rotate: 15
+            }
+          ]
+        },
+        {
+          visual: 'work-3',
+          stickers: [
+            {
+              text: "And allmodern's store locations page for their first ever physical retail store at wayfair.",
+              x: 22,
+              y: 102,
+              w: 321,
+              size: 16,
+              rotate: 9
+            },
+            {
+              text: 'Along with streamlining an internal tool to just one click.',
+              x: 70,
+              y: 488,
+              w: 236,
+              size: 16,
+              rotate: 10
+            }
+          ]
+        },
+        {
+          visual: 'work-4',
+          stickers: [
+            {
+              text: 'Also designed (& pitched) a pitch deck to help an NGO win a grant.',
+              x: 47,
+              y: 238,
+              w: 279,
+              size: 16,
+              rotate: 9
+            },
+            { text: 'You can watch it here', x: 118, y: 308, w: 152, size: 16, rotate: 9 },
+            {
+              text: 'Which also got featured in Rhode Island Medical Journal',
+              x: 66,
+              y: 606,
+              w: 220,
+              size: 16,
+              rotate: 8
+            }
+          ]
         }
       ]
     },
     {
       label: 'Figma',
-      slides: [
+      stories: [
         {
-          eyebrow: 'Figma',
-          title: 'Design files become interaction maps.',
-          body: 'Components, tokens, and transitions are translated into a living browser experience.',
-          figure: '05 / canvas',
-          mode: 'figma',
-          tags: ['Components', 'Tokens', 'States']
-        },
-        {
-          eyebrow: 'Figma',
-          title: 'The file sets the structure. The website supplies the feel.',
-          body: 'This version keeps the sections from the Penpot flow and recreates the story mechanic in code.',
-          figure: '06 / handoff',
-          mode: 'handoff',
-          tags: ['Penpot', 'SvelteKit', 'Vercel']
+          visual: 'figma-1',
+          collage: true,
+          stickers: [
+            { text: 'I made this site on Figma.', x: 50, y: 143, w: 276, size: 24, rotate: 0 },
+            {
+              text: 'Implemented it with some more tools (and AI).',
+              x: 69,
+              y: 198,
+              w: 236,
+              size: 16,
+              rotate: 0
+            },
+            { text: 'Check it out here', x: 98, y: 621, w: 179, size: 24, rotate: 4 }
+          ]
         }
       ]
     },
     {
       label: 'Me',
-      slides: [
+      stories: [
         {
-          eyebrow: 'Me',
-          title: 'Designer, builder, and motion-minded collaborator.',
-          body: 'Focused on portfolio systems, expressive interfaces, and the small details that make digital work feel handled.',
-          figure: '07 / portrait placeholder',
-          mode: 'me',
-          tags: ['Product', 'Brand', 'Front-end']
+          visual: 'me-1',
+          stickers: [
+            {
+              text: 'When I am not working, I am exploring museums or exhibitions.',
+              x: 65,
+              y: 102,
+              w: 245,
+              size: 16,
+              rotate: 3
+            }
+          ]
         },
         {
-          eyebrow: 'Me',
-          title: 'Calm structure. Sharp interaction. A little rhythm.',
-          body: 'The work is presented as a sequence because a portfolio should reveal itself, not unload everything at once.',
-          figure: '08 / rhythm',
-          mode: 'rhythm',
-          tags: ['Editorial', 'Story', 'Motion']
+          visual: 'me-2',
+          stickers: [
+            { text: 'Or making stuff with glass.', x: 108, y: 289, w: 190, size: 16, rotate: 4 },
+            {
+              text: 'Or just making or repairing something.',
+              x: 80,
+              y: 583,
+              w: 273,
+              size: 16,
+              rotate: 6
+            }
+          ]
         }
       ]
     },
     {
       label: 'Contact',
-      slides: [
+      stories: [
         {
-          eyebrow: 'Contact',
-          title: 'Let’s build something precise.',
-          body: 'For projects, collaborations, or a sharper version of this site once the final assets are ready.',
-          figure: '09 / closing card',
-          mode: 'contact',
-          tags: ['Email', 'Portfolio', 'Available']
+          visual: 'contact-1',
+          stickers: [
+            {
+              text: 'If you have reached here, don’t forget to say hello!',
+              x: 67,
+              y: 166,
+              w: 234,
+              size: 24,
+              rotate: 0
+            },
+            { text: 'LinkedIn', x: 156, y: 547, w: 62, size: 16, rotate: 0 },
+            { text: '@asheshgohil', x: 138, y: 593, w: 99, size: 16, rotate: 0 }
+          ]
         }
       ]
     }
   ];
 
   let chapterIndex = 0;
-  let slideIndex = 0;
+  let storyIndex = 0;
   let direction = 1;
   let touchStartX = 0;
   let touchStartY = 0;
 
   $: chapter = chapters[chapterIndex];
-  $: slide = chapter.slides[slideIndex];
-  $: storyKey = `${chapterIndex}-${slideIndex}`;
+  $: story = chapter.stories[storyIndex];
+  $: storyKey = `${chapterIndex}-${storyIndex}`;
 
-  function clampStory(nextChapter, nextSlide) {
+  function clampStory(nextChapter, nextStory) {
     const safeChapter = Math.max(0, Math.min(chapters.length - 1, nextChapter));
-    const safeSlide = Math.max(0, Math.min(chapters[safeChapter].slides.length - 1, nextSlide));
-    return [safeChapter, safeSlide];
+    const safeStory = Math.max(0, Math.min(chapters[safeChapter].stories.length - 1, nextStory));
+    return [safeChapter, safeStory];
   }
 
-  function setStory(nextChapter, nextSlide, nextDirection = 1) {
-    [chapterIndex, slideIndex] = clampStory(nextChapter, nextSlide);
+  function setStory(nextChapter, nextStory, nextDirection = 1) {
+    [chapterIndex, storyIndex] = clampStory(nextChapter, nextStory);
     direction = nextDirection;
-    window.history.replaceState(null, '', `#/${chapterIndex}/${slideIndex}`);
+    window.history.replaceState(null, '', `#/${chapterIndex}/${storyIndex}`);
   }
 
-  function nextSlide() {
-    if (slideIndex < chapter.slides.length - 1) {
-      setStory(chapterIndex, slideIndex + 1, 1);
+  function nextStory() {
+    if (storyIndex < chapter.stories.length - 1) {
+      setStory(chapterIndex, storyIndex + 1, 1);
       return;
     }
 
@@ -134,15 +247,15 @@
     }
   }
 
-  function previousSlide() {
-    if (slideIndex > 0) {
-      setStory(chapterIndex, slideIndex - 1, -1);
+  function previousStory() {
+    if (storyIndex > 0) {
+      setStory(chapterIndex, storyIndex - 1, -1);
       return;
     }
 
     if (chapterIndex > 0) {
       const previousChapter = chapters[chapterIndex - 1];
-      setStory(chapterIndex - 1, previousChapter.slides.length - 1, -1);
+      setStory(chapterIndex - 1, previousChapter.stories.length - 1, -1);
     }
   }
 
@@ -151,8 +264,8 @@
   }
 
   function handleKeydown(event) {
-    if (event.key === 'ArrowRight' || event.key === ' ') nextSlide();
-    if (event.key === 'ArrowLeft') previousSlide();
+    if (event.key === 'ArrowRight' || event.key === ' ') nextStory();
+    if (event.key === 'ArrowLeft') previousStory();
     if (event.key === 'ArrowUp') goToChapter(Math.max(0, chapterIndex - 1));
     if (event.key === 'ArrowDown') goToChapter(Math.min(chapters.length - 1, chapterIndex + 1));
   }
@@ -175,9 +288,9 @@
   }
 
   onMount(() => {
-    const [, rawChapter, rawSlide] = window.location.hash.match(/^#\/(\d+)\/(\d+)$/) || [];
-    if (rawChapter !== undefined && rawSlide !== undefined) {
-      [chapterIndex, slideIndex] = clampStory(Number(rawChapter), Number(rawSlide));
+    const [, rawChapter, rawStory] = window.location.hash.match(/^#\/(\d+)\/(\d+)$/) || [];
+    if (rawChapter !== undefined && rawStory !== undefined) {
+      [chapterIndex, storyIndex] = clampStory(Number(rawChapter), Number(rawStory));
     } else {
       window.history.replaceState(null, '', '#/0/0');
     }
@@ -207,51 +320,59 @@
 
   <section
     class="story-stage"
-    aria-label={`${chapter.label}: ${slide.title}`}
+    aria-label={`${chapter.label} story ${storyIndex + 1}`}
     on:touchstart={handleTouchStart}
     on:touchend={handleTouchEnd}
   >
     <div class="story-phone">
-      <div class="progress-row" aria-hidden="true">
-        {#each chapter.slides as item, index}
-          <span class:complete={index < slideIndex} class:current={index === slideIndex}></span>
-        {/each}
-      </div>
-
       {#key storyKey}
-        <article class={`story-card ${slide.mode}`}>
-          <div class="visual-field" aria-hidden="true">
-            <span class="shape shape-a"></span>
-            <span class="shape shape-b"></span>
-            <span class="shape shape-c"></span>
-            <span class="artifact artifact-one"></span>
-            <span class="artifact artifact-two"></span>
-            <span class="artifact artifact-three"></span>
+        <article class={`story-frame ${story.visual}`}>
+          <div class="photo-scene" aria-hidden="true">
+            <span class="person-head"></span>
+            <span class="person-body"></span>
+            <span class="scene-line scene-line-a"></span>
+            <span class="scene-line scene-line-b"></span>
+            {#if story.collage}
+              <span class="mock mock-a"></span>
+              <span class="mock mock-b"></span>
+              <span class="mock mock-c"></span>
+              <span class="thumb thumb-a"></span>
+              <span class="thumb thumb-b"></span>
+              <span class="thumb thumb-c"></span>
+            {/if}
           </div>
 
-          <div class="story-copy">
-            <p class="eyebrow">{slide.eyebrow}</p>
-            <h1>{slide.title}</h1>
-            <p class="body">{slide.body}</p>
-          </div>
+          <div class="top-scrim"></div>
 
-          <div class="tag-row" aria-label="Topics">
-            {#each slide.tags as tag}
-              <span>{tag}</span>
+          <div class="progress-row" aria-hidden="true">
+            {#each chapter.stories as item, index}
+              <span class:complete={index < storyIndex} class:current={index === storyIndex}></span>
             {/each}
           </div>
 
-          <p class="figure">{slide.figure}</p>
+          <header class="story-header">
+            <span class="avatar" aria-hidden="true"></span>
+            <span class="username">asheshgohil</span>
+            <span class="verified" aria-hidden="true">✓</span>
+            <span class="time">11h</span>
+            <span class="options" aria-hidden="true">•••</span>
+            <span class="close" aria-hidden="true">×</span>
+          </header>
+
+          {#each story.stickers as sticker}
+            <p
+              class="sticker"
+              class:large={sticker.size >= 24}
+              style={`left:${sticker.x / 3.75}%;top:${sticker.y / 7.58}%;width:${sticker.w / 3.75}%;--r:${sticker.rotate}deg;`}
+            >
+              {sticker.text}
+            </p>
+          {/each}
         </article>
       {/key}
 
-      <button class="tap-zone tap-left" type="button" aria-label="Previous story" on:click={previousSlide}></button>
-      <button class="tap-zone tap-right" type="button" aria-label="Next story" on:click={nextSlide}></button>
+      <button class="tap-zone tap-left" type="button" aria-label="Previous story" on:click={previousStory}></button>
+      <button class="tap-zone tap-right" type="button" aria-label="Next story" on:click={nextStory}></button>
     </div>
   </section>
-
-  <aside class="site-note">
-    <p>Tap left or right. Swipe sideways to skip sections.</p>
-    <p>Arrow keys work too.</p>
-  </aside>
 </main>
