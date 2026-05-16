@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
 
   const storyDuration = 6000;
+  const instagramUrl = 'https://www.instagram.com/asheshgohil';
 
   const chapters = [
     {
@@ -47,14 +48,12 @@
   let gestureGap = 0;
   let held = false;
   let progressKey = 0;
-  let transitionKey = 0;
   let autoplayTimer;
   let mounted = false;
   let activeStories = chapters.map(() => 0);
 
   $: chapter = chapters[chapterIndex];
   $: story = chapter.stories[storyIndex];
-  $: storyKey = `${chapterIndex}-${storyIndex}-${transitionKey}`;
   $: aspect = `${story.width} / ${story.height}`;
   $: progressStyle = `--story-duration:${storyDuration}ms;`;
   $: previousChapterIndex = chapterIndex > 0 ? chapterIndex - 1 : null;
@@ -75,14 +74,11 @@
   }
 
   function setStory(nextChapter, nextStory, nextDirection = 1) {
-    const previousChapter = chapterIndex;
     const [safeChapter, safeStory] = clampStory(nextChapter, nextStory);
-    const changedSection = previousChapter !== safeChapter;
 
     chapterIndex = safeChapter;
     storyIndex = safeStory;
     direction = nextDirection;
-    transitionKey += 1;
     progressKey += 1;
     activeStories[safeChapter] = safeStory;
     activeStories = [...activeStories];
@@ -138,7 +134,6 @@
       chapterIndex = safeChapter;
       storyIndex = safeStory;
       direction = safeChapter >= previousChapter ? 1 : -1;
-      transitionKey += 1;
       progressKey += 1;
       activeStories[safeChapter] = safeStory;
       activeStories = [...activeStories];
@@ -201,6 +196,10 @@
 
   function chapterStory(chapterNumber) {
     return chapters[chapterNumber].stories[activeStories[chapterNumber]];
+  }
+
+  function chapterStoryIndex(chapterNumber) {
+    return activeStories[chapterNumber];
   }
 
   function panelClass(position) {
@@ -300,17 +299,28 @@
               alt={visibleStory.alt}
             />
 
-            {#if visibleChapter.position === 'current'}
-              <div class="progress-mask" aria-hidden="true">
-                {#key progressKey}
-                  <div class="progress-row" style={progressStyle}>
-                    {#each chapter.stories as item, index}
-                      <span class:complete={index < storyIndex} class:current={index === storyIndex}></span>
-                    {/each}
-                  </div>
-                {/key}
-              </div>
-            {/if}
+            <a
+              class="profile-link"
+              href={instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Ashesh Gohil on Instagram"
+              on:pointerdown|stopPropagation
+              on:pointerup|stopPropagation
+            ></a>
+
+            <div class="progress-mask" aria-hidden="true">
+              {#key `${progressKey}-${visibleChapter.index}`}
+                <div class="progress-row" style={progressStyle}>
+                  {#each chapters[visibleChapter.index].stories as item, index}
+                    <span
+                      class:complete={index < chapterStoryIndex(visibleChapter.index)}
+                      class:current={visibleChapter.position === 'current' && index === storyIndex}
+                    ></span>
+                  {/each}
+                </div>
+              {/key}
+            </div>
           </div>
         {/each}
       </div>
