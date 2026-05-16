@@ -43,17 +43,30 @@
   let direction = 1;
   let pointerStartX = 0;
   let pointerStartY = 0;
+  let pointerFrameWidth = 375;
+  let gestureGap = 0;
+  let held = false;
   let progressKey = 0;
   let transitionKey = 0;
-  let transitionKind = 'story';
   let autoplayTimer;
   let mounted = false;
+  let activeStories = chapters.map(() => 0);
 
   $: chapter = chapters[chapterIndex];
   $: story = chapter.stories[storyIndex];
   $: storyKey = `${chapterIndex}-${storyIndex}-${transitionKey}`;
   $: aspect = `${story.width} / ${story.height}`;
   $: progressStyle = `--story-duration:${storyDuration}ms;`;
+  $: previousChapterIndex = chapterIndex > 0 ? chapterIndex - 1 : null;
+  $: nextChapterIndex = chapterIndex < chapters.length - 1 ? chapterIndex + 1 : null;
+  $: visibleChapters = [
+    previousChapterIndex !== null ? { index: previousChapterIndex, position: 'previous' } : null,
+    { index: chapterIndex, position: 'current' },
+    nextChapterIndex !== null ? { index: nextChapterIndex, position: 'next' } : null
+  ].filter(Boolean);
+  $: cubeOffset = held
+    ? Math.max(Math.min(gestureGap * 1.1, pointerFrameWidth), -pointerFrameWidth)
+    : 0;
 
   function clampStory(nextChapter, nextStory) {
     const safeChapter = Math.max(0, Math.min(chapters.length - 1, nextChapter));
@@ -69,9 +82,10 @@
     chapterIndex = safeChapter;
     storyIndex = safeStory;
     direction = nextDirection;
-    transitionKind = changedSection ? 'section' : 'story';
     transitionKey += 1;
     progressKey += 1;
+    activeStories[safeChapter] = safeStory;
+    activeStories = [...activeStories];
     window.history.replaceState(null, '', `#/${chapterIndex}/${storyIndex}`);
     if (mounted) scheduleAutoplay();
   }
@@ -90,24 +104,29 @@
 
   function nextSection() {
     if (chapterIndex < chapters.length - 1) {
-      setStory(chapterIndex + 1, 0, 1);
+      setStory(chapterIndex + 1, activeStories[chapterIndex + 1], 1);
     }
   }
 
   function previousSection() {
     if (chapterIndex > 0) {
-      setStory(chapterIndex - 1, 0, -1);
+      setStory(chapterIndex - 1, activeStories[chapterIndex - 1], -1);
     }
   }
 
+  function autoplayNext() {
+    if (storyIndex < chapter.stories.length - 1) nextStory();
+    else nextSection();
+  }
+
   function goToChapter(index) {
-    setStory(index, 0, index >= chapterIndex ? 1 : -1);
+    setStory(index, activeStories[index], index >= chapterIndex ? 1 : -1);
   }
 
   function scheduleAutoplay() {
     clearTimeout(autoplayTimer);
     autoplayTimer = setTimeout(() => {
-      nextStory();
+      autoplayNext();
     }, storyDuration);
   }
 
@@ -119,9 +138,10 @@
       chapterIndex = safeChapter;
       storyIndex = safeStory;
       direction = safeChapter >= previousChapter ? 1 : -1;
-      transitionKind = previousChapter !== safeChapter ? 'section' : 'story';
       transitionKey += 1;
       progressKey += 1;
+      activeStories[safeChapter] = safeStory;
+      activeStories = [...activeStories];
     } else {
       window.history.replaceState(null, '', '#/0/0');
     }
@@ -136,17 +156,27 @@
   }
 
   function handlePointerDown(event) {
+    const bounds = event.currentTarget.getBoundingClientRect();
     pointerStartX = event.clientX;
     pointerStartY = event.clientY;
+    pointerFrameWidth = bounds.width;
+    gestureGap = 0;
+    held = true;
+    clearTimeout(autoplayTimer);
+    event.currentTarget.setPointerCapture?.(event.pointerId);
   }
 
   function handlePointerUp(event) {
     const deltaX = event.clientX - pointerStartX;
     const deltaY = event.clientY - pointerStartY;
+    held = false;
+    gestureGap = deltaX;
+    event.currentTarget.releasePointerCapture?.(event.pointerId);
 
     if (Math.abs(deltaX) > 56 && Math.abs(deltaX) > Math.abs(deltaY)) {
       if (deltaX < 0) nextSection();
       if (deltaX > 0) previousSection();
+      gestureGap = 0;
       return;
     }
 
@@ -154,6 +184,54 @@
     const midpoint = bounds.left + bounds.width / 2;
     if (event.clientX < midpoint) previousStory();
     else nextStory();
+    gestureGap = 0;
+  }
+
+  function handlePointerMove(event) {
+    if (!held) return;
+    gestureGap = event.clientX - pointerStartX;
+  }
+
+  function handlePointerCancel(event) {
+    held = false;
+    gestureGap = 0;
+    scheduleAutoplay();
+    event.currentTarget.releasePointerCapture?.(event.pointerId);
+  }
+
+  function chapterStory(chapterNumber) {
+    return chapters[chapterNumber].stories[activeStories[chapterNumber]];
+  }
+
+  function panelClass(position) {
+    if (position === 'current') return 'current-panel';
+    if (position === 'next') return 'next-panel';
+    if (position === 'previous') return 'previous-panel';
+    return '';
+  }
+
+  function panelStyle(position) {
+    if (!held) {
+      return position === 'previous'
+        ? 'transform-origin: right center;'
+        : position === 'next'
+          ? 'transform-origin: left center;'
+          : `transform-origin: ${direction > 0 ? 'right' : 'left'} center;`;
+    }
+
+    const baseTranslate = position === 'previous' ? -100 : position === 'next' ? 100 : 0;
+    const baseRotate = position === 'previous' ? -90 : position === 'next' ? 90 : 0;
+    const dragRotate = Math.min(Math.max(gestureGap / 4.2, -90), 90);
+    const origin =
+      position === 'previous'
+        ? 'right center'
+        : position === 'next'
+          ? 'left center'
+          : gestureGap < 0
+            ? 'right center'
+            : 'left center';
+
+    return `transform: translateX(${baseTranslate}%) rotateY(${dragRotate + baseRotate}deg); transform-origin: ${origin}; transition: transform 0s;`;
   }
 
   onMount(() => {
@@ -195,31 +273,46 @@
   >
     <div
       class="story-phone"
+      class:held
       role="group"
       aria-label="Story viewer"
       style:aspect-ratio={aspect}
       on:pointerdown={handlePointerDown}
+      on:pointermove={handlePointerMove}
       on:pointerup={handlePointerUp}
+      on:pointercancel={handlePointerCancel}
     >
-      {#key storyKey}
-        <img
-          class="story-image"
-          class:section-image={transitionKind === 'section'}
-          src={story.src}
-          width={story.width}
-          height={story.height}
-          alt={story.alt}
-        />
-      {/key}
+      <div
+        class="story-cube"
+        style={`transform: translateX(${cubeOffset}px); ${held ? 'transition: transform 0s;' : 'transition: transform .5s ease;'}`}
+      >
+        {#each visibleChapters as visibleChapter (visibleChapter.index)}
+          {@const visibleStory = chapterStory(visibleChapter.index)}
+          <div
+            class={`chapter-panel ${panelClass(visibleChapter.position)}`}
+            style={panelStyle(visibleChapter.position)}
+          >
+            <img
+              class="story-image"
+              src={visibleStory.src}
+              width={visibleStory.width}
+              height={visibleStory.height}
+              alt={visibleStory.alt}
+            />
 
-      <div class="progress-mask" aria-hidden="true">
-        {#key progressKey}
-          <div class="progress-row" style={progressStyle}>
-            {#each chapter.stories as item, index}
-              <span class:complete={index < storyIndex} class:current={index === storyIndex}></span>
-            {/each}
+            {#if visibleChapter.position === 'current'}
+              <div class="progress-mask" aria-hidden="true">
+                {#key progressKey}
+                  <div class="progress-row" style={progressStyle}>
+                    {#each chapter.stories as item, index}
+                      <span class:complete={index < storyIndex} class:current={index === storyIndex}></span>
+                    {/each}
+                  </div>
+                {/key}
+              </div>
+            {/if}
           </div>
-        {/key}
+        {/each}
       </div>
 
       <span class="tap-zone tap-left" aria-hidden="true"></span>
