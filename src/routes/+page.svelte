@@ -8,34 +8,34 @@
     {
       label: 'Introduction',
       stories: [
-        { id: 'intro-1', width: 375, height: 758, alt: 'Introduction story 1' },
-        { id: 'intro-2', width: 375, height: 758, alt: 'Introduction story 2' },
-        { id: 'intro-3', width: 375, height: 758, alt: 'Introduction story 3' }
+        { id: 'intro-1', src: '/stories/intro-1.png', width: 375, height: 758, alt: 'Introduction story 1' },
+        { id: 'intro-2', src: '/stories/intro-2.png', width: 375, height: 758, alt: 'Introduction story 2' },
+        { id: 'intro-3', src: '/stories/intro-3.png', width: 375, height: 758, alt: 'Introduction story 3' }
       ]
     },
     {
       label: 'Work - v0',
       stories: [
-        { id: 'work-v0-1', width: 375, height: 758, alt: 'Work v0 story 1' },
-        { id: 'work-v0-2', width: 375, height: 758, alt: 'Work v0 story 2' },
-        { id: 'work-v0-3', width: 375, height: 758, alt: 'Work v0 story 3' },
-        { id: 'work-v0-4', width: 375, height: 758, alt: 'Work v0 story 4' }
+        { id: 'work-v0-1', src: '/stories/work-v0-1.png', width: 375, height: 758, alt: 'Work v0 story 1' },
+        { id: 'work-v0-2', src: '/stories/work-v0-2.png', width: 375, height: 758, alt: 'Work v0 story 2' },
+        { id: 'work-v0-3', src: '/stories/work-v0-3.png', width: 375, height: 758, alt: 'Work v0 story 3' },
+        { id: 'work-v0-4', src: '/stories/work-v0-4.png', width: 375, height: 758, alt: 'Work v0 story 4' }
       ]
     },
     {
       label: 'Figma',
-      stories: [{ id: 'figma-1', width: 480, height: 758, alt: 'Figma story' }]
+      stories: [{ id: 'figma-1', src: '/stories/figma-1.png', width: 480, height: 758, alt: 'Figma story' }]
     },
     {
       label: 'Me',
       stories: [
-        { id: 'me-1', width: 375, height: 758, alt: 'Me story 1' },
-        { id: 'me-2', width: 375, height: 758, alt: 'Me story 2' }
+        { id: 'me-1', src: '/stories/me-1.png', width: 375, height: 758, alt: 'Me story 1' },
+        { id: 'me-2', src: '/stories/me-2.png', width: 375, height: 758, alt: 'Me story 2' }
       ]
     },
     {
       label: 'Contact',
-      stories: [{ id: 'contact-1', width: 375, height: 758, alt: 'Contact story' }]
+      stories: [{ id: 'contact-1', src: '/stories/contact-1.png', width: 375, height: 758, alt: 'Contact story' }]
     }
   ];
 
@@ -283,6 +283,8 @@
             style={panelStyle(visibleChapter.position)}
           >
             <article class={`editable-story story-${visibleStory.id}`} aria-label={visibleStory.alt}>
+              <img class="pixel-base" src={visibleStory.src} alt="" aria-hidden="true" draggable="false" />
+
               <div class="pagination" aria-hidden="true">
                 {#key paginationKey}
                   <div class="pagination-row" style={paginationStyle}>

@@ -18,9 +18,10 @@ npm run dev
 
 ## Editable Frames
 
-The story frames are implemented as editable Svelte markup and CSS in
-`src/routes/+page.svelte` and `src/routes/styles.css`. The site no longer renders
-flattened PNG/SVG story exports.
+The story frames use a hybrid editable implementation. Penpot exports in
+`static/stories` provide exact background/photo pixels, while text, links,
+pagination, story controls, and recreated card layers live as editable Svelte
+markup and CSS in `src/routes/+page.svelte` and `src/routes/styles.css`.
 
 ## Deployment
 
