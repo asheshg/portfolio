@@ -147,6 +147,42 @@ button {
   background: transparent;
 }
 
+.pagination-animation {
+  position: absolute;
+  inset: 10px 0 auto;
+  z-index: 7;
+  height: 3px;
+  padding: 0 8px;
+  pointer-events: none;
+}
+
+.pagination-fill-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+}
+
+.pagination-fill-row span {
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: transparent;
+}
+
+.pagination-fill-row span::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: #ffffff;
+}
+
+.pagination-fill-row span.current::after {
+  animation: pagination-fill var(--story-duration) linear forwards;
+}
+
 .tap-zone {
   position: absolute;
   top: 0;
@@ -170,6 +206,12 @@ button {
   from {
     opacity: 0;
     transform: translateX(calc(var(--direction) * 12px));
+  }
+}
+
+@keyframes pagination-fill {
+  to {
+    width: 100%;
   }
 }
 

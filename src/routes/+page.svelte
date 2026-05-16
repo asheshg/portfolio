@@ -47,6 +47,7 @@
   let pointerFrameWidth = 375;
   let gestureGap = 0;
   let held = false;
+  let paginationKey = 0;
   let autoplayTimer;
   let mounted = false;
   let activeStories = chapters.map(() => 0);
@@ -54,6 +55,7 @@
   $: chapter = chapters[chapterIndex];
   $: story = chapter.stories[storyIndex];
   $: aspect = `${story.width} / ${story.height}`;
+  $: paginationStyle = `--story-duration:${storyDuration}ms;`;
   $: previousChapterIndex = chapterIndex > 0 ? chapterIndex - 1 : null;
   $: nextChapterIndex = chapterIndex < chapters.length - 1 ? chapterIndex + 1 : null;
   $: visibleChapters = [
@@ -77,6 +79,7 @@
     chapterIndex = safeChapter;
     storyIndex = safeStory;
     direction = nextDirection;
+    paginationKey += 1;
     activeStories[safeChapter] = safeStory;
     activeStories = [...activeStories];
     window.history.replaceState(null, '', `#/${chapterIndex}/${storyIndex}`);
@@ -131,6 +134,7 @@
       chapterIndex = safeChapter;
       storyIndex = safeStory;
       direction = safeChapter >= previousChapter ? 1 : -1;
+      paginationKey += 1;
       activeStories[safeChapter] = safeStory;
       activeStories = [...activeStories];
     } else {
@@ -192,6 +196,10 @@
 
   function chapterStory(chapterNumber) {
     return chapters[chapterNumber].stories[activeStories[chapterNumber]];
+  }
+
+  function chapterStoryIndex(chapterNumber) {
+    return activeStories[chapterNumber];
   }
 
   function panelClass(position) {
@@ -300,6 +308,20 @@
               on:pointerdown|stopPropagation
               on:pointerup|stopPropagation
             ></a>
+
+            {#if visibleChapter.position === 'current'}
+              <div class="pagination-animation" aria-hidden="true">
+                {#key paginationKey}
+                  <div class="pagination-fill-row" style={paginationStyle}>
+                    {#each chapters[visibleChapter.index].stories as item, index}
+                      <span
+                        class:current={index === chapterStoryIndex(visibleChapter.index)}
+                      ></span>
+                    {/each}
+                  </div>
+                {/key}
+              </div>
+            {/if}
           </div>
         {/each}
       </div>
