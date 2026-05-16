@@ -47,7 +47,6 @@
   let pointerFrameWidth = 375;
   let gestureGap = 0;
   let held = false;
-  let progressKey = 0;
   let autoplayTimer;
   let mounted = false;
   let activeStories = chapters.map(() => 0);
@@ -55,7 +54,6 @@
   $: chapter = chapters[chapterIndex];
   $: story = chapter.stories[storyIndex];
   $: aspect = `${story.width} / ${story.height}`;
-  $: progressStyle = `--story-duration:${storyDuration}ms;`;
   $: previousChapterIndex = chapterIndex > 0 ? chapterIndex - 1 : null;
   $: nextChapterIndex = chapterIndex < chapters.length - 1 ? chapterIndex + 1 : null;
   $: visibleChapters = [
@@ -79,7 +77,6 @@
     chapterIndex = safeChapter;
     storyIndex = safeStory;
     direction = nextDirection;
-    progressKey += 1;
     activeStories[safeChapter] = safeStory;
     activeStories = [...activeStories];
     window.history.replaceState(null, '', `#/${chapterIndex}/${storyIndex}`);
@@ -134,7 +131,6 @@
       chapterIndex = safeChapter;
       storyIndex = safeStory;
       direction = safeChapter >= previousChapter ? 1 : -1;
-      progressKey += 1;
       activeStories[safeChapter] = safeStory;
       activeStories = [...activeStories];
     } else {
@@ -196,10 +192,6 @@
 
   function chapterStory(chapterNumber) {
     return chapters[chapterNumber].stories[activeStories[chapterNumber]];
-  }
-
-  function chapterStoryIndex(chapterNumber) {
-    return activeStories[chapterNumber];
   }
 
   function panelClass(position) {
@@ -308,19 +300,6 @@
               on:pointerdown|stopPropagation
               on:pointerup|stopPropagation
             ></a>
-
-            <div class="progress-mask" aria-hidden="true">
-              {#key `${progressKey}-${visibleChapter.index}`}
-                <div class="progress-row" style={progressStyle}>
-                  {#each chapters[visibleChapter.index].stories as item, index}
-                    <span
-                      class:complete={index < chapterStoryIndex(visibleChapter.index)}
-                      class:current={visibleChapter.position === 'current' && index === storyIndex}
-                    ></span>
-                  {/each}
-                </div>
-              {/key}
-            </div>
           </div>
         {/each}
       </div>

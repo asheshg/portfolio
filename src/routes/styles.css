@@ -136,46 +136,6 @@ button {
   animation: story-in 240ms ease-out both;
 }
 
-.progress-mask {
-  position: absolute;
-  inset: 10px 0 auto;
-  z-index: 7;
-  height: 3px;
-  padding: 0 8px;
-  background: transparent;
-}
-
-.progress-row {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  gap: 4px;
-}
-
-.progress-row span {
-  height: 3px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.progress-row span::after {
-  content: "";
-  display: block;
-  width: 0;
-  height: 100%;
-  border-radius: inherit;
-  background: #ffffff;
-}
-
-.progress-row span.complete::after {
-  width: 100%;
-}
-
-.progress-row span.current::after {
-  animation: progress-fill var(--story-duration) linear forwards;
-}
-
 .profile-link {
   position: absolute;
   z-index: 9;
@@ -210,12 +170,6 @@ button {
   from {
     opacity: 0;
     transform: translateX(calc(var(--direction) * 12px));
-  }
-}
-
-@keyframes progress-fill {
-  to {
-    width: 100%;
   }
 }
 
