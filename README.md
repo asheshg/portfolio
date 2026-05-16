@@ -16,14 +16,11 @@ npm install
 npm run dev
 ```
 
-## Penpot Assets
+## Editable Frames
 
-The story visuals are exported from Penpot into `static/stories/` as PNG files.
-After changing the Penpot wireframes, reconnect the Penpot MCP server and run:
-
-```sh
-node scripts/export-penpot-stories.mjs
-```
+The story frames are implemented as editable Svelte markup and CSS in
+`src/routes/+page.svelte` and `src/routes/styles.css`. The site no longer renders
+flattened PNG/SVG story exports.
 
 ## Deployment
 
